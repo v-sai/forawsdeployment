@@ -19,7 +19,7 @@ const defaultPortalDetails = {
   description: "Bullit satelite tracking"
 }
 
-const getPostData = async (sessionId, baseUrl, req) => {
+const getPostData = async () => {
     const imgs =[
         "https://fastly.picsum.photos/id/10/2500/1667.jpg?hmac=J04WWC_ebchx3WwzbM-Z4_KC_LeLBWr5LZMaAkWkF68",
         "https://fastly.picsum.photos/id/13/2500/1667.jpg?hmac=SoX9UoHhN8HyklRA4A3vcCWJMVtiBXUg0W4ljWTor7s",
@@ -28,7 +28,7 @@ const getPostData = async (sessionId, baseUrl, req) => {
   try{
     const randImgNumber = Math.round((Math.random() * imgs.length));
     const sessionInfo = {
-      title: `Sai's - Tracking Session #${sessionId?.id} `,
+      title: `Sai's - Tracking Session #${randImgNumber} `,
       description: "",
       thumbnail: imgs[randImgNumber]
     }
@@ -69,8 +69,8 @@ app.get("/livetracking", async (req, res) => {
       return res.status(404).end()
     }
     // get post info
-    const postId = req.query;
-    getPostData(postId, baseUrl, req).then((sessionData => {
+    // const postId = req.query;
+    getPostData().then((sessionData => {
       // inject meta updated tags
       htmlData = replaceMetaTags(htmlData, sessionData, baseUrl, originalUrl);
       return res.send(htmlData);
