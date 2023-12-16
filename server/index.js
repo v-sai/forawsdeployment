@@ -11,6 +11,16 @@ app.use(
   express.static(path.resolve(__dirname, "..", "build"), { maxAge: "30d" })
 );
 
+app.use((req, res, next) => {
+  const timestamp = new Date().toISOString();
+  const method = req.method;
+  const url = req.originalUrl;
+
+  console.log(`${timestamp} - ${method} ${url}`);
+
+  next();
+});
+
 const defaultPortalDetails = {
   title: "Bullitt Satilite Messenger",
   thumbnail: "/home_illustration.jpg",
